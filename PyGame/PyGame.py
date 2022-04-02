@@ -12,19 +12,40 @@ pygame.display.set_icon(icon)
 playerImg = pygame.image.load('spaceship.png')
 playerX = screenWidth/2
 playerY = screenHeight*0.9
-
+positionXchange = 0
 def player(x,y):
     screen.blit(playerImg,(x,y))
 
 pygame.display.set_caption("Space Invaders")
 running = True
 while running:
+
+    screen.fill((12,43,23))
+
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == py
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                positionXchange = -0.3
+            
+            if event.key == pygame.K_RIGHT and playerX < 736:
+                positionXchange = 0.3
+                
+        if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    positionXchange = 0
+                    
+        
+        
+    #print(positionXchange)
+    
+    playerX += positionXchange
+    if playerX < 0:
+        playerX = 0
+    if playerX > 736:
+        playerX = 736
 
-    screen.fill((12,43,23))
     player(playerX,playerY)
-    pygame.display.update()
+    pygame.display.update()       
